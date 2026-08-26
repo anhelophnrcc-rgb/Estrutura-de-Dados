@@ -1,0 +1,21 @@
+import java.util.Arrays;
+
+public class InsercaoDireta {
+    public static void main(String[] args) {
+        int[] numeros = {25, 57, 48, 37, 12, 86, 33};
+
+        for (int i = 1; i < numeros.length; i++) { // começa em 1 porque a posição 0 já é "ordenada" sozinha
+            int aux = numeros[i];
+            int j;
+
+            for (j = i - 1; j >= 0 && numeros[j] > aux; j--) {
+                numeros[j + 1] = numeros[j];
+            }
+
+            numeros[j + 1] = aux;
+        }
+
+        System.out.println("|VETOR EM ORDEM CRESCENTE|");
+        System.out.println(Arrays.toString(numeros));
+    }
+}
