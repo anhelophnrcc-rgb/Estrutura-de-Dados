@@ -1,0 +1,121 @@
+import java.util.Random;
+import java.util.Arrays;
+
+public class TrabalhoOrdenacao {
+
+    public static void main(String[] args) {
+        int tamanho = 1000;
+
+        System.out.println("=== Vetor Aleatório ===");
+        int[] aleatorioOriginal = gerarVetorAleatorio(tamanho);
+
+        testarOrdenacao("Bubble Sort", Arrays.copyOf(aleatorioOriginal, tamanho));
+        testarOrdenacao("Seleção Direta", Arrays.copyOf(aleatorioOriginal, tamanho));
+        testarOrdenacao("Inserção Direta", Arrays.copyOf(aleatorioOriginal, tamanho));
+
+        // ===== VETOR ORDENADO =====
+        System.out.println("\n=== Vetor Ordenado ===");
+        int[] ordenadoOriginal = gerarVetorOrdenado(tamanho);
+
+        testarOrdenacao("Bubble Sort", Arrays.copyOf(ordenadoOriginal, tamanho));
+        testarOrdenacao("Seleção Direta", Arrays.copyOf(ordenadoOriginal, tamanho));
+        testarOrdenacao("Inserção Direta", Arrays.copyOf(ordenadoOriginal, tamanho));
+
+        // ===== VETOR INVERTIDO =====
+        System.out.println("\n=== Vetor Invertido ===");
+        int[] invertidoOriginal = gerarVetorInvertido(tamanho);
+
+        testarOrdenacao("Bubble Sort", Arrays.copyOf(invertidoOriginal, tamanho));
+        testarOrdenacao("Seleção Direta", Arrays.copyOf(invertidoOriginal, tamanho));
+        testarOrdenacao("Inserção Direta", Arrays.copyOf(invertidoOriginal, tamanho));
+    }
+    
+
+    public static int[] gerarVetorAleatorio(int tamanho) {
+        Random random = new Random();
+        int[] vetor = new int[tamanho];
+        for (int i = 0; i < vetor.length; i++) {
+            vetor[i] = random.nextInt(10000);
+        }
+        return vetor;
+    }
+
+    public static int[] gerarVetorOrdenado(int tamanho) {
+        int[] vetor = new int[tamanho];
+        for (int i = 0; i < vetor.length; i++) {
+            vetor[i] = i;
+        }
+        return vetor;
+    }
+
+    public static int[] gerarVetorInvertido(int tamanho) {
+        int[] vetor = new int[tamanho];
+        for (int i = 0; i < vetor.length; i++) {
+            vetor[i] = vetor.length - i;
+        }
+        return vetor;
+    }
+
+    // ===== ALGORITMOS DE ORDENAÇÃO =====
+
+    public static void bubbleSort(int[] numeros) {
+        for (int i = 0; i < numeros.length - 1; i++) { // -1 porque não precisa verificar o último número
+            for (int j = 0; j < numeros.length - 1 - i; j++) { // -i porque o final já está ordenado a cada passada
+                if (numeros[j] > numeros[j + 1]) {
+                    int aux = numeros[j];
+                    numeros[j] = numeros[j + 1];
+                    numeros[j + 1] = aux;
+                }
+            }
+        }
+    }
+
+    public static void selecaoDireta(int[] numeros) {
+        for (int i = 0; i < numeros.length - 1; i++) { // -1 porque não precisa verificar o último número
+            int menor = i;
+
+            for (int j = i + 1; j < numeros.length; j++) { // +1 porque não precisa verificar o primeiro número
+                // O if serve para receber o menor índice
+                if (numeros[j] < numeros[menor]) {
+                    menor = j;
+                }
+            }
+
+            int aux = numeros[i];
+            numeros[i] = numeros[menor];
+            numeros[menor] = aux;
+        }
+    }
+
+    public static void insercaoDireta(int[] numeros) {
+        for (int i = 1; i < numeros.length; i++) { // começa em 1 porque a posição 0 já é "ordenada" sozinha
+            int aux = numeros[i];
+            int j;
+
+            for (j = i - 1; j >= 0 && numeros[j] > aux; j--) {
+                numeros[j + 1] = numeros[j];
+            }
+
+            numeros[j + 1] = aux;
+        }
+    }
+
+    // ===== MEDIÇÃO DE TEMPO =====
+
+    public static void testarOrdenacao(String nomeAlgoritmo, int[] vetor) {
+        long inicio = System.nanoTime();
+
+        if (nomeAlgoritmo.equals("Bubble Sort")) {
+            bubbleSort(vetor);
+        } else if (nomeAlgoritmo.equals("Seleção Direta")) {
+            selecaoDireta(vetor);
+        } else if (nomeAlgoritmo.equals("Inserção Direta")) {
+            insercaoDireta(vetor);
+        }
+
+        long fim = System.nanoTime();
+        double tempoMs = (fim - inicio) / 1_000_000.0;
+
+        System.out.println(nomeAlgoritmo + ": " + tempoMs + " ms");
+    }
+}
