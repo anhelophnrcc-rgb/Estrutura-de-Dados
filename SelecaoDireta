@@ -1,0 +1,25 @@
+import java.util.Arrays;
+
+public class SelecaoDireta {
+    public static void main(String[] args) {
+        int[] numeros = {25, 57, 48, 37, 12, 86, 33};
+
+        for (int i = 0; i < numeros.length - 1; i++) { // -1 porque não precisa verificar o último número
+            int menor = i;
+
+            for (int j = i + 1; j < numeros.length; j++) { // +1 porque não precisa verificar o primeiro número
+                // O if serve para receber o menor índice
+                if (numeros[j] < numeros[menor]) {
+                    menor = j;
+                }
+            }
+
+            int aux = numeros[i];
+            numeros[i] = numeros[menor];
+            numeros[menor] = aux;
+        }
+
+        System.out.println("|VETOR EM ORDEM CRESCENTE|");
+        System.out.println(Arrays.toString(numeros));
+    }
+}
