@@ -1,0 +1,16 @@
+public class Potencia {
+    public static int pot(int base, int expoente){
+        if(expoente == 0){
+            return 1;
+        }else{
+            return base * pot(base , expoente -1);
+        }
+    }
+    public static void main(String[] args){
+        int base = 2;
+        int expoente = 3;
+        int resp = pot(base,expoente);
+        System.out.println("A potencia de: "+ resp);
+    }
+
+}
