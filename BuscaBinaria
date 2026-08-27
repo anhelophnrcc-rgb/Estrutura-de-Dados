@@ -1,0 +1,25 @@
+public class BuscaBinaria {
+    public static int buscbi(int[] vetor, int num,int inicio, int fim) {
+        if (inicio > fim) {
+            return -1;
+        }
+        int meio = (inicio + fim) / 2;
+        if (vetor[meio] == num) {
+            return meio;//encontrado
+        } else {
+            if (num < vetor[meio]) {
+                return buscbi(vetor, num, inicio, meio - 1); //esquerda
+            } else {
+                return buscbi(vetor, num, meio + 1, fim);//direita
+            }
+        }
+    }
+        public static void main(String[] args){
+            int [] vetor = {3, 7, 10, 25, 30, 47, 50};
+            int num = 25;
+            int resp = buscbi(vetor, num,0, vetor.length-1);
+            System.out.println(resp);
+        }
+
+
+}
