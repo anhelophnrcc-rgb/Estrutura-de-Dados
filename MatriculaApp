@@ -1,0 +1,16 @@
+public class MatriculaApp {
+    public static void main(String[] args){
+        Aluno carla = new Aluno("CArla", "123");
+        Aluno bruno = new Aluno("Bruno", "456");
+        Disciplina poo = new Disciplina("Programação 00", "poo");
+        Disciplina bd = new Disciplina("BAnco de Dados", "BD");
+
+        Matricula mat1 = Matricula.matricular(1001,carla, poo);
+        Matricula mat2 = Matricula.matricular(1002, carla, bd);
+        Matricula mat3 = Matricula.matricular(1003, bruno, bd);
+
+        carla.listaDisciplinas();
+        poo.
+    }
+}
+
