@@ -1,0 +1,22 @@
+public class TorredeHanoi {
+    public static void main (String[] args){
+        int discos = 3;
+        torredehanoi(discos, 'A', 'B', 'C');
+        //origem A, destino B, Auxiliar C
+    }
+    public static void torredehanoi(int n, char origem, char destino, char auxiliar){
+        if(n == 1){
+            System.out.println("Mover disco 1 de " + origem + " para " + destino);
+            return;
+        }
+        //1. mover num-1 disco da oriegm para auxiliar( usando destino de apoio)
+        torredehanoi(n - 1, origem, auxiliar, destino);
+
+        //2- mover disco num(o maior da origem) para o destino
+        System.out.println("Mover disco " + n + " de " + origem + " para " + destino);
+
+        //3.mover num-1 discos da auxiliar parao destinho(usando origem de apoio)
+        torredehanoi(n-1, auxiliar, destino, origem);
+
+    }
+}
