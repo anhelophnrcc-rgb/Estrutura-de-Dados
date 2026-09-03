@@ -1,0 +1,14 @@
+public class TorredeHanoi {
+    public static void hanoi(int n, String origem, String destino, String aux){
+        if (n == 1)
+            System.out.println("Mover disco " + origem + " para pino " + destino);
+        else{
+            hanoi(n - 1, origem, aux, destino);
+            System.out.println("Mover disco " + origem + " para pino " + destino);
+            hanoi(n-1, aux, destino, origem);
+        }
+    }
+    public static void main(String[] args){
+        hanoi(3,"A", "B", "C");
+    }
+}
