@@ -1,0 +1,121 @@
+public class ExercicioBuseqbusbi {
+    public static int[] gerarVetorOrdenado(int tamanho){ //gera um vetor ordenado de 2 em 2
+        int[] vetor = new int[tamanho];
+        for (int i = 0; i < tamanho; i++){
+            vetor[i] = i * 2;
+        }
+        return vetor;
+    }
+    public static int buscaSequencial(int [] vetor, int valorBusca){ // busca sequencial
+        for (int i = 0; i < vetor.length; i++ ){ //retorna indice se encontrou e -1 se não encontrou
+            if (vetor[i] == valorBusca){
+                return i; //encontrou
+            }
+        }
+        return -1; // não encontrou
+    }
+    public static int buscaBinariaRecursiva(int[] vetor, int valorBusca, int incio, int fim){//busca binaria recursiva
+        if (incio > fim){
+            return -1; //não encontrou
+        }
+        int meio = (incio + fim) / 2;
+
+        if (vetor[meio] == valorBusca){
+            return meio; //encontrou
+
+        } else if (valorBusca > vetor[meio]) {
+            return buscaBinariaRecursiva(vetor, valorBusca, meio + 1, fim); //direita
+        }else {
+            return buscaBinariaRecursiva(vetor, valorBusca, incio, meio -1);//esquerda
+        }
+    }
+
+    //Busca binaria Ñ Recursiva
+
+    public static int buscaBinariaNaoRecursiva(int[] vetor, int valorBusca){ //sempre retornando indice se encontrou ou -1 se não encontrou
+        int inicio = 0;
+        int fim = vetor.length -1;
+
+        while (inicio <= fim){
+            int meio = (inicio + fim) / 2;
+
+            if (vetor[meio] == valorBusca){
+                return meio; //encontrou
+            }else if (valorBusca > vetor[meio]){
+                inicio = meio +1; //direitta
+            }else {
+                fim = meio -1; //esquerda
+            }
+        }
+        return -1; //nao encontrou
+    }
+    public static void main (String[] args){
+        int tamanho = 100000;
+        int[] vetor = gerarVetorOrdenado(tamanho);
+
+        // 3 valores que existem no vetor (inicio, meio e fim)
+
+        int [] valoresExistentes = {vetor[0], vetor[tamanho / 2], vetor[tamanho -1]};
+
+        // 3 valores inexistentes no vetor
+
+        int [] valoresInexistentes = {5, 5001, tamanho * 2};
+
+        System.out.println("==Informações do Vetor==");
+        System.out.println("Tamanho: " + vetor.length);
+        System.out.println("Primeiro elemento: " + vetor[0]);
+        System.out.println("Ultimo elemento: " + vetor[vetor.length -1]);
+
+        System.out.println("==Valores Existentes no vetor==");
+        for (int v : valoresExistentes){
+            System.out.println(v);
+        }
+
+        System.out.println("==Valores Inexistentes no vetor==");
+        for (int v : valoresInexistentes){
+            System.out.println(v);
+        }
+
+        //juntando todos os valores em unico vetor de testes
+
+        int [] todosOsValoresParaBusca = { valoresExistentes[0], valoresExistentes[1], valoresExistentes[2],
+                                            valoresInexistentes[0], valoresInexistentes[1], valoresInexistentes[2]};
+
+        long inicioTempo, fimTempo;
+
+        // Busca Sequencial
+
+        System.out.println("==Busca Sequencial==");
+        inicioTempo = System.nanoTime();
+        for (int v : todosOsValoresParaBusca){
+            int pos = buscaSequencial(vetor,v);
+            System.out.println("Valor " +v+ "-> posição: " + pos);
+        }
+        fimTempo = System.nanoTime();
+        System.out.println("Tempo total: " + (fimTempo - inicioTempo) + " ns ");
+
+        //Busca binaria Recursiva
+
+        System.out.println("==Busca Binaria recursiva==");
+        inicioTempo = System.nanoTime();
+        for (int v : todosOsValoresParaBusca) {
+            int pos = buscaBinariaRecursiva(vetor, v, 0, vetor.length - 1);
+            System.out.println("Valor " + v + " -> posição: " + pos);
+        }
+        fimTempo = System.nanoTime();
+        System.out.println("Tempo total: " + (fimTempo - inicioTempo) + " ns");
+
+        // busca binaria ~n recursiva
+
+        System.out.println("== Busca binaria não recursiva ==");
+        inicioTempo = System.nanoTime();
+        for (int v : todosOsValoresParaBusca) {
+            int pos = buscaBinariaNaoRecursiva(vetor, v);
+            System.out.println("Valor " + v + " -> posição: " + pos);
+        }
+        fimTempo = System.nanoTime();
+        System.out.println("Tempo total: " + (fimTempo - inicioTempo) + " ns");
+    }
+
+}
+
