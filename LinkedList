@@ -1,0 +1,112 @@
+
+
+public class LinKedList<T>{
+
+    private static class Node<T>{
+        public T data;
+        public Node<T> next;
+
+        public Node(T val){
+            data = val;
+            next = null;
+        }
+    }
+    private Node<T> head;
+    private int count;
+
+    public LinKedList(){
+        head = null;
+        count = 0;
+    }
+    public void append(T val){
+        Node<T> inserted = new Node<>(val);
+        Node<T> current;
+
+        if (head == null){
+            head = inserted;
+        }else{
+            current = head;
+            while (current.next != null){
+                current = current.next;
+            }
+            current.next = inserted;
+        }
+        count++;
+    }
+    public String print(){
+        Node<T> current = head;
+        String output = "";
+
+        while (current != null) {
+            output += current.data + " ";
+            current = current.next;
+        }
+        return output;
+    }
+
+    public T removeFirst(){
+        if (head == null){
+            return null;
+        }
+        T removido = head.data;
+        head = head.next;
+        count--;
+        return removido;
+    }
+    public T insertFirst(T val){
+        Node<T> inserted = new Node<>(val);
+        inserted.next = head;
+        head = inserted;
+        count++;
+        return val;
+    }
+    public int buscar(T val){
+        Node<T> current = head;
+        int posicao = 0;
+
+        while (current != null){
+            if (current.data.equals(val)){
+                return posicao;
+            }
+            current = current.next;
+            posicao++;
+        }
+        return -1;
+    }
+    public T removeEsp(int pos){
+        if (pos < 0 || pos >= count){
+            return null;
+        }
+        if (pos == 0){
+            return removeFirst();
+        }
+
+        Node<T> anterior = head;
+        for (int i = 0; i < pos - 1; i++){
+            anterior = anterior.next;
+        }
+
+        T removido = anterior.next.data;
+        anterior.next = anterior.next.next;
+        count--;
+        return removido;
+    }
+
+    //Programa Principal
+    public static void main(String[] args){
+        LinKedList<String> lista = new LinKedList<>();
+
+        lista.append("3");
+        lista.append("5");
+        lista.append("10");
+        System.out.println("Elemento removido = " + lista.removeEsp(1));
+        System.out.println("Lista = " + lista.print());
+
+        System.out.println("Elemento removido = " + lista.removeFirst());
+        System.out.println("Elemento inserido = " + lista.insertFirst("1"));
+        System.out.println("Posicao do 5 = " + lista.buscar("5"));
+        System.out.println("Posicao do 7 = " + lista.buscar("7"));
+
+    }
+
+}
