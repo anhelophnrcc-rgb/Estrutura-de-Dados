@@ -1,0 +1,48 @@
+public class PilhaApp {
+
+    public static boolean expressaoValida(String expressao) {
+        Pilha pilha = new Pilha();
+
+        for (int i = 0; i < expressao.length(); i++) {
+            char c = expressao.charAt(i);
+
+            if (c == '(' || c == '[' || c == '{') {
+                pilha.empilhar(c);
+
+            } else if (c == ')' || c == ']' || c == '}') {
+                if (pilha.estaVazia()) {
+                    return false; // fechamento sem abertura
+                }
+                char abertura = pilha.desempilhar();
+                if (!formamPar(abertura, c)) {
+                    return false; // ordem/tipo errado
+                }
+            }
+        }
+
+        return pilha.estaVazia(); // sobrou abertura sem fechar?
+    }
+
+    private static boolean formamPar(char abre, char fecha) {
+        return (abre == '(' && fecha == ')')
+                || (abre == '[' && fecha == ']')
+                || (abre == '{' && fecha == '}');
+    }
+
+    public static void main(String[] args) {
+        String[] testes = {
+                "(a + b) * [c - d]",      // válida
+                "{[(a + b) * c] - d}",    // válida
+                "((a + b)",               // abertura sobrando
+                "a + b)",                 // fechamento sobrando
+                "(a + b]",                // tipo errado
+                "[(a + b])",              // posição errada
+                ""                        // vazia (válida)
+        };
+
+        for (String t : testes) {
+            System.out.println("\"" + t + "\" -> "
+                    + (expressaoValida(t) ? "VÁLIDA" : "INVÁLIDA"));
+        }
+    }
+}
