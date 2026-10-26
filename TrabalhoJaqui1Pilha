@@ -1,0 +1,21 @@
+import java.util.ArrayList;
+
+public class Pilha {
+    private ArrayList<Character> dados = new ArrayList<>();
+
+    public void empilhar(char c) {
+        dados.add(c);
+    }
+
+    public char desempilhar() {
+        return dados.remove(dados.size() - 1);
+    }
+
+    public char topo() {
+        return dados.get(dados.size() - 1);
+    }
+
+    public boolean estaVazia() {
+        return dados.isEmpty();
+    }
+}
